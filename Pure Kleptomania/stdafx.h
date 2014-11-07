@@ -21,6 +21,8 @@ OTHER DEALINGS IN THE SOFTWARsE.
 #include <queue>
 #include <vector>
 #include <string>
+#include <cmath>
+#include <cstdlib>
 #include <signal.h>
 
 //OS selection and verification
@@ -74,8 +76,8 @@ struct atomicChoice
 	void * args;
 };
 
-static enum ItemType { Clothing, Electronics, Jewelry, SportsEquipment, Novelty };
-static enum SpriteType { PlayerToken, ActorToken };
+enum ItemType { Clothing, Electronics, Jewelry, SportsEquipment, Novelty };
+enum SpriteType { PlayerToken, ActorToken };
 using namespace std;
 
 #endif

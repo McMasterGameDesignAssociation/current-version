@@ -71,7 +71,8 @@ void Image::readImage(void)
 	unsigned int sig_read = 0;
 	int color_type, interlace_type;
 	FILE *fp;
-	fopen_s(&fp, imageName, "rb");
+	//fopen_s(&fp, imageName, "rb");
+	fp = fopen(imageName, "rb");
 	if(fp == NULL)
 	{
 #ifdef _DEBUG
