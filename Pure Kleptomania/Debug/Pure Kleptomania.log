@@ -1,0 +1,30 @@
+﻿Build started 2014-11-07 12:28:40 PM.
+     1>Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Pure Kleptomania\Pure Kleptomania.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\LibPng\include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\FreeGlut\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _DEBUG /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Actor.cpp Renderer.cpp Source.cpp Sprite.cpp World2D.cpp
+         Actor.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         World2D.cpp
+         Sprite.cpp
+         Source.cpp
+         Renderer.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Debug\Pure Kleptomania.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\LibPng/Lib/Debug" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\FreeGlut/libs/Debug" libpng16.lib freeglut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Debug\Pure Kleptomania.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Debug\Pure Kleptomania.lib" /MACHINE:X86 Debug\BasicEntity.obj
+         Debug\BasicObject.obj
+         Debug\Image.obj
+         Debug\Player.obj
+         Debug\Renderer.obj
+         Debug\Source.obj
+         Debug\Actor.obj
+         Debug\Sprite.obj
+         Debug\Tile.obj
+         Debug\VectorTypes.obj
+         Debug\World2D.obj
+         Debug\WorldObject2D.obj
+         Pure Kleptomania.vcxproj -> C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Debug\Pure Kleptomania.exe
+     1>Done Building Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\Pure Kleptomania\Pure Kleptomania\Pure Kleptomania.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.73
