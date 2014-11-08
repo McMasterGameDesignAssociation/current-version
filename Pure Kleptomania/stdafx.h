@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARsE.
 #include <string>
 #include <cmath>
 #include <cstdlib>
+#include <cstring> // for memcopy
 #include <signal.h>
 
 //OS selection and verification
