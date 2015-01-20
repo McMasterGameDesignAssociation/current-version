@@ -1,4 +1,7 @@
-This is the current functioning kleptomania engine
+This is the top folder
 
-This is the prototype that we will be using to set up
-the finalized version of the klepto engine
+KleptoEngine, is the folder that contains
+the current version of the klepto engine
+
+LibPngTest, is the folder that contains
+the blank libpng project
