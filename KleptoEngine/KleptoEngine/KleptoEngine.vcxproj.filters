@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\BaseClasses">
+      <UniqueIdentifier>{166bd9de-a5ce-4977-bc8c-73c6afd37f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameClasses">
+      <UniqueIdentifier>{fe8d9dec-6fb6-45d3-b482-df7de1ce981f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameClasses\Headers">
+      <UniqueIdentifier>{3c42215b-b2cf-4f15-9cbb-248e4bc79128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RenderClasses">
+      <UniqueIdentifier>{75277054-1916-4f41-a295-755b4facc89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\BaseClasses">
+      <UniqueIdentifier>{0e4da069-3e3b-4cab-9f56-bd09a2eb478f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\GameClasses">
+      <UniqueIdentifier>{fe3c10d5-486a-4a5a-acc9-1b685cf81360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\RenderClass">
+      <UniqueIdentifier>{42be85db-4eb4-42d3-bf30-db68f2ed5da2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicEntity.cpp">
+      <Filter>Resource Files\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicObject.cpp">
+      <Filter>Resource Files\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Resource Files\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldObject2D.cpp">
+      <Filter>Resource Files\BaseClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Resource Files\GameClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Resource Files\GameClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Resource Files\GameClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="World2D.cpp">
+      <Filter>Resource Files\GameClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Resource Files\RenderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Resource Files\RenderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorTypes.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseEntity.h">
+      <Filter>Header Files\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicObject.h">
+      <Filter>Header Files\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldObject2D.h">
+      <Filter>Header Files\BaseClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\GameClasses\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorTypes.h">
+      <Filter>Header Files\GameClasses\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHeaders.h">
+      <Filter>Header Files\GameClasses\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="World2D.h">
+      <Filter>Header Files\GameClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\RenderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\RenderClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
