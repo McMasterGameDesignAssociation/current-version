@@ -39,31 +39,24 @@ void BasicObject::changeAnimation(bool animate) {canAnimate = animate;}
 void BasicObject::linkTextureCoords(FV2 * newCoords) {textureCoords = &newCoords[0];}
 FV2 * BasicObject::getTextureCoords(void) {return &textureCoords[0];}
 ULong * BasicObject::getTextureId(void) {return &textureId[0];}
+
 void BasicObject::setChunkNumber(Pos2D xyNumber) {chunkNumber = xyNumber;}
+void BasicObject::setImageDimensions(Pos2D size) { imageDimensions = size; }
+
 ULong BasicObject::getTextureValue(void) const { return *textureId; }
 
-void BasicObject::moveCoordTo(Pos2D xyNumber)
+Pos2D BasicObject::getImageSize(void) const { return imageDimensions; }
+Pos2D BasicObject::getImageDivisions(void) const { return chunkNumber; }
+
+void BasicObject::moveCoordTo(FV2 * xyNumber)
 {
-	if(xyNumber.x >= chunkNumber.x || xyNumber.y >= chunkNumber.y)
-	{
-#ifdef OS_WINDOWS
-		SetLastError(0xAAAA0004);
-#elif defined(OS_LINUX)
-		perror(0xAAAA0004);
-#endif
-#ifdef _DEBUG
-		cout << "the new texture coordinates exceed the size of the number of tiles in the image" << endl;
-#endif
-		return;
-	}
-	//x = imageSize
 #ifdef _VERBOSE
 	cout << "moving the texture coords to new position" << endl;
 #endif
-	FV2 start = FV2(0, 0);
-	FV2 end = FV2(0.125, 0.125);
-	//FV2 start = FV2(double(xyNumber.x) / chunkNumber.x, double(xyNumber.y) / chunkNumber.y);
-	//FV2 end = FV2(double(xyNumber.x + 1) / chunkNumber.x, double(xyNumber.y + 1) / chunkNumber.y);
+	//FV2 start = FV2(0.125, 0.875);
+	//FV2 end = FV2(0.25, 0.750);
+	FV2 start = xyNumber[0];
+	FV2 end = xyNumber[1];
 	/*
 	[1][2]
 	[0]
@@ -75,7 +68,5 @@ void BasicObject::moveCoordTo(Pos2D xyNumber)
 	textureCoords[2] = textureCoords[3] = end;
 	textureCoords[4] = FV2(end.x, start.y);
 }
-
-void BasicObject::setImageTileSize(Pos2D setSize) {tileSize = setSize;}
 
 #endif

@@ -79,8 +79,8 @@ void keyboardUp(unsigned char key, int x, int y)
 }
 void idle(void) 
 {
-	//testWorld.updateWorld();
-	//keyStateMachine();
+	testWorld.updateWorld();
+	keyStateMachine();
 }
 
 void display(void)
@@ -106,20 +106,22 @@ int main(int argc, char* argv[])
 #endif
 	testWorld.setDimensions(Pos2D(30, 30));
 	testWorld.setTileSize(Pos2D(32, 32));
+	
 #ifdef _DEBUG
 	cout << "generating tile lists" << endl;
 #endif
 	testWorld.addTileToSet("testTile0", "Just a test", 0, false);
-	testWorld.addTileToSet("testTile1", "Just a test", 1, true);
-	testWorld.addTileToSet("testTile2", "Just a test", 2, true);
+	testWorld.addTileToSet("testTile1", "Just a test", 12, true);
+	testWorld.addTileToSet("testTile2", "Just a test", 13, false);
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 9; j++)
 			testWorld.setTile(1, Pos2D(1 + i, 1 + j));
 	
-	testWorld.setTile(0, Pos2D(4, 4));
-	testWorld.setTile(0, Pos2D(7, 4));
-	testWorld.setTile(0, Pos2D(4, 7));
-	testWorld.setTile(0, Pos2D(7, 7));
+	testWorld.setTile(2, Pos2D(4, 4));
+	testWorld.setTile(2, Pos2D(7, 4));
+	testWorld.setTile(2, Pos2D(4, 7));
+	testWorld.setTile(2, Pos2D(7, 7));
+
 #ifdef _DEBUG
 	cout << endl << endl << "Reading tile map" << endl;
 #endif
@@ -127,10 +129,12 @@ int main(int argc, char* argv[])
 #ifdef _DEBUG
 	cout << "tile map loaded successfully" << endl << endl;
 #endif
+
 	testWorld.addSprite("Player 0", "The current Player", Pos2D(45, 45), FV2(82, 82), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), PlayerToken);
-	testWorld.addSprite("Actor 0", "The first actor", Pos2D(30, 30), FV2(30, 70), 10, "Assets\\test_subject_2.png", &testRender, Pos2D(7, 4), ActorToken);
-	testWorld.addSprite("Actor 1", "The second actor", Pos2D(30, 30), FV2(30, 140), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
-	testWorld.addSprite("Actor 2", "The third actor", Pos2D(30, 30), FV2(50, 250), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
+	//testWorld.addSprite("Actor 0", "The first actor", Pos2D(30, 30), FV2(30, 70), 10, "Assets\\test_subject_2.png", &testRender, Pos2D(7, 4), ActorToken);
+	//testWorld.addSprite("Actor 1", "The second actor", Pos2D(30, 30), FV2(30, 140), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
+	//testWorld.addSprite("Actor 2", "The third actor", Pos2D(30, 30), FV2(50, 250), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
+
 #ifdef _DEBUG
 	cout << "Finished image load in" << endl;
 #endif

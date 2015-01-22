@@ -24,9 +24,11 @@ class Renderer
 	private:
 		//Dimensions are the size of the screen
 		Pos2D dimensions;
+		
 		//View port position is the current location
 		//That the viewport is located in the scene
 		Pos2D viewPortPosition;
+		
 		//The view port size is the current area that the
 		//player can be situated in i.e. is the view port
 		//is 50% the size of the dimension than the player
@@ -48,9 +50,11 @@ class Renderer
 		*/
 		vector<FV3*> basicBuffer;
 		vector<IV2*> pixels;
+		
 		//The maxTriangles gives the total number
 		//of triangles in the render pipeline
 		vector<ULong> maxNodes;
+		
 		vector<Image> imageFiles;
 		
 		/*
@@ -73,6 +77,7 @@ class Renderer
 		static void display(void);
 		static Image * currentImage;
 		void linkTextureId(ULong *baseId);
+
 		//Verify lists is used ot make sure that
 		//all of the lists are the same length, i.e.
 		//all of them have been processed
@@ -102,6 +107,12 @@ class Renderer
 		position in the image set
 		*/
 		Pos2D getImageDivisions(Uint index) const;
+
+		/*
+		getImageSize, returns the size of a texture map at a specific
+		place in the image set
+		*/
+		Pos2D getImageSize(Uint index) const;
 
 	public:
 		Renderer(void);

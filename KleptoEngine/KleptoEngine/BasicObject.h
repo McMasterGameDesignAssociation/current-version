@@ -48,13 +48,6 @@ class BasicObject : public BasicEntity
 		Pos2D chunkNumber;
 
 		/*
-		tileSize is the xy pixel
-		dimensions of the sections
-		that texture are made up of
-		*/
-		Pos2D tileSize;
-
-		/*
 		imageDimensions, is the xy 
 		pixel dimensions of the image
 		that the 
@@ -112,20 +105,27 @@ class BasicObject : public BasicEntity
 		//in the image
 		void setChunkNumber(Pos2D xyNumber);
 
+		/*
+			setImageDimensions, lets the object
+			know the size of the image for the
+			texture, this is used for selecting
+			the tiles
+		*/
+		void setImageDimensions(Pos2D textureSize);
+
+		Pos2D getImageSize(void) const;
+		Pos2D getImageDivisions(void) const;
+
 		//linkTextureCoords links the objects
 		//texture pointer to the render's draw
 		//pointers
 		void linkTextureCoords(FV2 *newCoords);
 
-		//setImageTileSize, sets the pixel
-		//dimensions of the section of the
-		//sections of the images used
-		//for texturing
-		void setImageTileSize(Pos2D tileSize);
-
 		//moveCoordTo moves the current location
-		//of the texture slider to the new xy index
-		void moveCoordTo(Pos2D xyNumber);
+		//of the texture slider to the 
+		//xy positions by expanding the
+		//2, 2D vectors into 6
+		void moveCoordTo(FV2 * newCoords);
 
 		ULong * getTextureId(void);
 		ULong getTextureValue(void) const;

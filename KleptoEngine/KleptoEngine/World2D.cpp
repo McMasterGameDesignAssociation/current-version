@@ -220,6 +220,7 @@ void World2D::updateTileTexture(Renderer * render)
 	cout << endl << "Running the update texture routine for world: " << getName() << endl  << endl;
 #endif
 	Pos2D divisions = render -> getImageDivisions(*textureId);
+	Pos2D imageSize = render -> getImageSize(*textureId);
 
 	/* now that we have the division 
 	size we need to loop through
@@ -228,7 +229,7 @@ void World2D::updateTileTexture(Renderer * render)
 	for(int i = 0; i < tileSet.size(); i++)
 	{
 		tileSet.at(i).setChunkNumber(divisions);
-		tileSet.at(i).setImageTileSize(defaultTileSize);
+		tileSet.at(i).setImageDimensions(imageSize);
 		/*Once all of the tiles have
 		the updated divison numbers
 		move the tile texture coords
@@ -239,7 +240,12 @@ void World2D::updateTileTexture(Renderer * render)
 }
 
 FV2 * World2D::getTileTextureCoords(Pos2D location)
-{return tileSet.at(getTileAt(location)).getTextureCoords();}
+{
+#ifdef _VERBOSE
+	cout << "getting tile texture coords from the world at address: " << &tileSet.at(getTileAt(location)).getTextureCoords()[0] << endl;
+#endif
+	return tileSet.at(getTileAt(location)).getTextureCoords();
+}
 
 void World2D::setTileMap(string imageName, Pos2D divisionSize, Renderer * render)
 {

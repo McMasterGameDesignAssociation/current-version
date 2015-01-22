@@ -62,22 +62,22 @@ void Renderer::addTileToDraw(Pos2D position, Pos2D size, bool canPass, ULong id)
 	if(canPass) color = FV3(1, 1, 1);
 	else color = FV3(1, 0, 0);
 
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //0//3
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //0//3
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[1]; //3//2
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[3]; //3//2
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //2//2
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //2//2
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //2//1
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //2//1
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[3]; //1//0
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[1]; //1//0
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //0//0
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //0//0
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
 
@@ -121,7 +121,7 @@ void Renderer::render(void)
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	for(Uint i = 0; i < imageFiles.size(); i++)
+	for(Uint i = imageFiles.size(); i--;)
 	{
 		imageFiles.at(i).enableSetUp();
 		glVertexPointer(2, GL_INT, 0, pixels.at(i));
@@ -186,6 +186,16 @@ void Renderer::populateArrays(World2D *world)
 #ifdef _DEBUG
 	cout << "building tile lists" << endl;
 #endif
+	
+	/*
+	All tiles are passive, and there is a lot more
+	address in the renderer's texture coordinates
+	array than there is in the tile data, so we
+	first update the tile texture coordinates
+	and then assign the corrected data to the
+	renderer afterwards
+	*/
+	world->updateTileTexture(this);
 
 	for(ULong i = 0; i < mapDims.y; i++)
 	{
@@ -193,45 +203,85 @@ void Renderer::populateArrays(World2D *world)
 		{
 			Pos2D currentLocation(i,j);
 			bool isPassable = world->isPassable(currentLocation);
-			linkTextureCoords(world->getTileTextureCoords(currentLocation),
+#ifdef _VERBOSE
+			cout << "Address for the current tile: " << &world->getTileTextureCoords(currentLocation)[0] << endl;
+#endif
+			FV2 * temp = world->getTileTextureCoords(currentLocation);
+			linkTextureCoords(temp,
 							  world->getTextureValue(), 
 							  world->getTileTexture(currentLocation));
 #ifdef _VERBOSE
-		if(world->getTileTexture(currentLocation) != 0)
-				cout << "Tile location: " << i << " " << j << " with tile number: " 
-				<< world->getTileTexture(currentLocation) << endl;
+			cout << endl << "New address for current tile after linkage: " << &world->getTileTextureCoords(currentLocation)[0] << endl;
 #endif
 			addTileToDraw(Pos2D(i*tileSize.y, j*tileSize.x), tileSize, isPassable, world->getTextureValue());
 		}
 	}
+
 	if(world->verifyPlayer()) linkSprite(world->getPlayer());
 	for(Uint i = 0; i < world -> getActorNumber(); i++)
 		linkSprite(world -> getActor(i));
-	//world->updateTileTexture(this);
+
 }
 
 /*
 	THIS NEEDS TO BE MODIFIED SO THAT 
 	ONLY ONE TILE IS DRAWN AT A TIME
 */
-void Renderer::linkTextureCoords(FV2 * linkage, ULong imageId, Uint tileNumber)
+void Renderer::linkTextureCoords(FV2 *linkage, ULong imageId, Uint tileNumber)
 {
 #ifdef _VERBOSE
+	cout << endl << "RUNNING FUNCTION linkTextureCoords" << endl;
+	cout << "linkage address: " << &linkage[0] << endl;
+	cout << "current textureCoords address: " << &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))];
 	cout << endl << "Linking texture for image with ID: " << imageId << endl;
-	cout << "With current pointer location: " << 
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].x << " " << 
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].y << 
+	cout << "With current pointer location: " <<
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].x << " " <<
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].y << endl <<
 	" with address: " << &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))] << 
-	" and current pointer at " << currentPointer.at(Uint(imageId)) << endl << endl;
+	" and current pointer at " << currentPointer.at(Uint(imageId)) << endl;
 #endif
 	if(textureCoords.empty()) return;
-	linkage = &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))];
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))] = FV2(0, 0);
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 1] = FV2(1, 0);
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 2] = FV2(1, 1);
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 3] = FV2(1, 1);
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 4] = FV2(0, 1);
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 5] = FV2(0, 0);
+	//linkage = &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))];
+	/*
+	texture pattern
+	0,0
+	0,1
+	1,1
+
+	1,1
+	1,0
+	0,0
+
+	also positive y is at the bottom, make a note of this
+	*/
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))] = linkage[0];	
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 1] = linkage[1];
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 2] = linkage[2];
+	
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 3] = linkage[3];
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 4] = linkage[4];
+	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 5] = linkage[5];
+#ifdef _VERBOSE
+	cout << "The new address of linkage: " << &linkage[0] << endl << endl;
+#endif
+}
+
+Pos2D Renderer::getImageSize(Uint index) const
+{
+	/*First error check, if the image does not exist
+	then return a division size of 0, and report in
+	verbose mode and debug mode that the image does
+	not exist*/
+	if(imageFiles.size() <= index)
+	{
+#ifdef _DEBUG
+		cout << "Image with ID: " << index << " does not currently exist in the system" << endl;
+#endif
+		return Pos2D(0, 0);
+	}
+	//else return the division size of the image at
+	//that location
+	return imageFiles.at(index).getSize();
 }
 
 Pos2D Renderer::getImageDivisions(Uint index) const

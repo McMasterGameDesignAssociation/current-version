@@ -40,7 +40,22 @@ void Tile::moveCoords(void)
 	x = imageIndex/division.x*tileSize, 
 	and 
 	y = imageInex%division.y*tileSize*/
-	moveCoordTo(Pos2D(0, 0));
+
+	Pos2D imageSize = getImageSize(), divisions = getImageDivisions();
+	Pos2D tileSize = getImageSize() / divisions;
+	Pos2D xyPlacement = Pos2D((imageIndex % divisions.y)*tileSize.x, (imageIndex / divisions.x)*tileSize.y);
+
+#ifdef _VERBOSE
+	cout << "current tile size: " << tileSize.x << " " << tileSize.y << endl;
+	cout << "position should be x: " << (imageIndex % divisions.y) << " and y: " << (imageIndex / divisions.x) << endl;
+	cout << "at position x: " << xyPlacement.x << " y: " << xyPlacement.y << endl;
+	cout << "relative position x: " << double(xyPlacement.x) / double(imageSize.x) << " y: " << double(xyPlacement.y) / double(imageSize.y) << endl;
+#endif
+	FV2 * tempValue = new FV2[2];
+	tempValue[0] = FV2(double(xyPlacement.x) / double(imageSize.x), 1 - (double(xyPlacement.y) / double(imageSize.y)));
+	tempValue[1] = FV2(double(xyPlacement.x + tileSize.x) / double(imageSize.x), 1 - (double(xyPlacement.y + tileSize.y) / double(imageSize.y)));
+	moveCoordTo(tempValue);
+	delete[] tempValue;
 }
 
 #endif
