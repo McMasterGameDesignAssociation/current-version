@@ -140,10 +140,6 @@ vector<Pos2D> Sprite::rayTrace(World2D* world, Pos2D start, Pos2D end)
 */
 void Sprite::updatePosition(World2D * world)
 {
-#ifdef _VERBOSE
-	cout << "Checking the placement of the sprite" << endl;
-	cout << "Raw sprite position: " << position.x << " " << position.y << endl;
-#endif
 	FV2 increment = FV2(0, 0);
 	Pos2D pos = world->getDefaultTileSize();
 	bool check = true;

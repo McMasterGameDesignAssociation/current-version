@@ -1,10 +1,11 @@
-﻿Build started 2015-01-22 4:55:45 PM.
-     1>Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-01-24 7:49:05 PM.
+     1>Project "C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/Include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _VERBOSE /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Verbose\\" /Fd"Verbose\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Tile.cpp
-         Tile.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\FreeGlut/Include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _VERBOSE /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Verbose\\" /Fd"Verbose\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Renderer.cpp
+         Renderer.cpp
+     1>c:\users\benjamin\documents\visual studio 2013\projects\kleptoengine\kleptoengine\renderer.cpp(205): warning C4244: 'initializing' : conversion from 'ULong' to 'Uint', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Lib/Release" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/libs/Debug" freeglut.lib libpng16.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.lib" /MACHINE:X86 Verbose\Actor.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\LibPng/Lib/Release" /LIBPATH:"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\FreeGlut/libs/Debug" freeglut.lib libpng16.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.lib" /MACHINE:X86 Verbose\Actor.obj
          Verbose\BasicEntity.obj
          Verbose\BasicObject.obj
          Verbose\Image.obj
@@ -16,9 +17,9 @@
          Verbose\VectorTypes.obj
          Verbose\World2D.obj
          Verbose\WorldObject2D.obj
-         KleptoEngine.vcxproj -> C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.exe
-     1>Done Building Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" (Build target(s)).
+         KleptoEngine.vcxproj -> C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\Verbose\KleptoEngine.exe
+     1>Done Building Project "C:\Users\Benjamin\documents\visual studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.27
+Time Elapsed 00:00:01.35

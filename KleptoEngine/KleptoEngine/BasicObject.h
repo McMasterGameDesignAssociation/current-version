@@ -127,6 +127,9 @@ class BasicObject : public BasicEntity
 		//2, 2D vectors into 6
 		void moveCoordTo(FV2 * newCoords);
 
+		//getTextureId is used to get the address
+		//of the textureId. This is helpful when
+		//linking sprites to the render pipeline
 		ULong * getTextureId(void);
 		ULong getTextureValue(void) const;
 		FV2 * getTextureCoords(void);

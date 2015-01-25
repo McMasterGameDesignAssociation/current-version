@@ -19,7 +19,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Image::Image(const char* startImage, Pos2D imageDivison) : 
 BasicEntity(startImage, "Image"), hasAlpha(false), imageAvailable(false), 
-textureBinary(NULL), divisionNumber(imageDivison)
+textureBinary(NULL), divisionNumber(imageDivison), temporaryFile(NULL)
 {
 	glGenTextures(1, &texture);
 	readImage();
@@ -27,7 +27,7 @@ textureBinary(NULL), divisionNumber(imageDivison)
 
 Image::Image(string startImage, string desc, Pos2D imageDivision) : 
 BasicEntity(startImage, desc), hasAlpha(false), imageAvailable(false),
-textureBinary(NULL), divisionNumber(imageDivision)
+textureBinary(NULL), divisionNumber(imageDivision), temporaryFile(NULL)
 {
 	glGenTextures(1, &texture);
 	readImage();
@@ -53,7 +53,6 @@ bool Image::validatePNG(void)
 #ifdef _DEBUG
 		cout << "That file does not exist" << endl;
 #endif
-		fclose(temporaryFile);
 		return false;
 	}
 
@@ -135,11 +134,11 @@ void Image::readImage(void)
 
 	textureBinary = (unsigned char*)malloc(rowBytes * size_t(imageSize.y) + 1);
 	
-	png_bytep *rowPointers = (png_bytep*)malloc(height*sizeof(png_bytep));
+	png_bytep *rowPointers = new png_bytep[height];
 
 	//next set the offsets 
 	//to the row pointers
-	for(int i = 0; i < height; i++)
+	for(Uint i = 0; i < height; i++)
 	{
 		rowPointers[height - 1 - i] = textureBinary + i * rowBytes;
 	}

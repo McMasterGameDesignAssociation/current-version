@@ -62,22 +62,22 @@ void Renderer::addTileToDraw(Pos2D position, Pos2D size, bool canPass, ULong id)
 	if(canPass) color = FV3(1, 1, 1);
 	else color = FV3(1, 0, 0);
 
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //0//3
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; 
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[3]; //3//2
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[3]; 
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //2//2
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; 
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; //2//1
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[2]; 
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[1]; //1//0
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[1];
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
-	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0]; //0//0
+	pixels.at(Uint(id))[currentPointer.at(Uint(id))] = points[0];
 	basicBuffer.at(Uint(id))[currentPointer.at(Uint(id))] = color;
 	currentPointer.at(Uint(id))++;
 
@@ -89,9 +89,10 @@ void Renderer::linkSprite(Sprite * sprite)
 	ULong index = sprite -> getTextureValue();
 	FV3 testColor;
 	if(sprite -> getType() == ActorToken) testColor = FV3(0, 0, 1);
-	else if(sprite->getType() == PlayerToken) testColor = FV3(0, 1, 0);
+	else if(sprite->getType() == PlayerToken) testColor = FV3(1, 1, 1);
 	for(int i = 0; i < 6; i++) basicBuffer.at(Uint(index))[currentPointer.at(Uint(index)) + i] = testColor;
 	sprite->setLocationPointer(&pixels.at(Uint(index))[currentPointer.at(Uint(index))]);
+	sprite->linkTextureCoords(textureCoords.at(Uint(index)));
 	currentPointer.at(Uint(index)) += 6;
 }
 
@@ -99,9 +100,9 @@ void Renderer::setNewMax(ULong nodes, ULong id)
 {
 	maxNodes.at(Uint(id)) = nodes*6;
 	currentPointer.at(Uint(id)) = 0;
-	basicBuffer.at(Uint(id)) = new FV3[Uint(maxNodes.at(id))];
-	pixels.at(Uint(id)) = new IV2[Uint(maxNodes.at(id))];
-	textureCoords.at(Uint(id)) = new FV2[Uint(maxNodes.at(id))];
+	basicBuffer.at(Uint(id)) = new FV3[Uint(maxNodes.at(Uint(id)))];
+	pixels.at(Uint(id)) = new IV2[Uint(maxNodes.at(Uint(id)))];
+	textureCoords.at(Uint(id)) = new FV2[Uint(maxNodes.at(Uint(id)))];
 }
 
 void Renderer::render(void)
@@ -121,7 +122,7 @@ void Renderer::render(void)
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	for(Uint i = imageFiles.size(); i--;)
+	for(Uint i = 0; i < imageFiles.size(); i++)
 	{
 		imageFiles.at(i).enableSetUp();
 		glVertexPointer(2, GL_INT, 0, pixels.at(i));
@@ -129,6 +130,7 @@ void Renderer::render(void)
 		glColorPointer(3, GL_DOUBLE, 0, basicBuffer.at(i));
 		glDrawArrays(GL_TRIANGLES, 0, GLsizei(currentPointer.at(i)));
 		imageFiles.at(i).disableSetUp();
+		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -155,13 +157,16 @@ void Renderer::populateArrays(World2D *world)
 #ifdef _DEBUG
 	cout << "Beginning the array population" << endl << "setting maximums..." << endl;
 #endif
+	if(imageFiles.empty()) return;
 	/*
 		This is where the main loop will go,
 		it will scan through each image find
 		the relevant ids and populate the arrays
 		and the texture coordinates
 	*/
-	ULong * maximums = new ULong[imageFiles.size()];
+	ULong * maximums;
+	maximums = new ULong[imageFiles.size()];
+
 	for(Uint i = 0; i < imageFiles.size(); i++)
 		maximums[i] = 0;
 	//Add the tile map to the count
@@ -171,11 +176,14 @@ void Renderer::populateArrays(World2D *world)
 	//Next loop through all of the actors
 	for(ULong i = 0; i < world->getActorNumber(); i++)
 			maximums[world->getActorTexture(Uint(i))]++;
+
 	for(Uint i = 0; i < imageFiles.size(); i++)
 			setNewMax(maximums[i], i);
-#ifdef _DEBUG
+
+#ifdef _VERBOSE
 	cout << "maximums set" << endl;
 #endif
+
 	Pos2D mapDims = world -> getDimensions();
 	Pos2D tileSize = world -> getDefaultTileSize();
 
@@ -183,10 +191,29 @@ void Renderer::populateArrays(World2D *world)
 	cout << "Tile dimensions: " << tileSize.x << " " << tileSize.y << endl;
 #endif
 	
-#ifdef _DEBUG
+#ifdef _VERBOSE
 	cout << "building tile lists" << endl;
 #endif
+	/*
+		Next link the texture coordinates for the 
+		player sprite use the sprite linkage, and
+		not the renderer linkage
+	*/
+	//First get the player address
+	Player *playerStandIn = world->getPlayer();
+	//next get the texture ID for the player
+	Uint playerTextureID = playerStandIn->getTextureValue();
+	//next retrieve the image data that belongs to the player
+	//then link the image texture data 
+	//to the player texture data
+#ifdef _VERBOSE
+	cout << "Currrently populating the player texture coordinates" << endl << "player has address: " << &playerStandIn << endl;
+#endif
+	//Finally increment the current 
+	//pointer for the image that the 
+	//player belongs to
 	
+
 	/*
 	All tiles are passive, and there is a lot more
 	address in the renderer's texture coordinates
@@ -203,21 +230,48 @@ void Renderer::populateArrays(World2D *world)
 		{
 			Pos2D currentLocation(i,j);
 			bool isPassable = world->isPassable(currentLocation);
-#ifdef _VERBOSE
-			cout << "Address for the current tile: " << &world->getTileTextureCoords(currentLocation)[0] << endl;
-#endif
+
 			FV2 * temp = world->getTileTextureCoords(currentLocation);
 			linkTextureCoords(temp,
 							  world->getTextureValue(), 
 							  world->getTileTexture(currentLocation));
-#ifdef _VERBOSE
-			cout << endl << "New address for current tile after linkage: " << &world->getTileTextureCoords(currentLocation)[0] << endl;
-#endif
+
 			addTileToDraw(Pos2D(i*tileSize.y, j*tileSize.x), tileSize, isPassable, world->getTextureValue());
 		}
 	}
 
 	if(world->verifyPlayer()) linkSprite(world->getPlayer());
+#ifdef _VERBOSE
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 6].x = 0;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 6].y = 0;
+
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 5].x = 0;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 5].y = 0.25;
+
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 4].x = 0.125;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 4].y = 0.25;
+
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 3].x = 0;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 3].y = 0;
+
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 2].x = 0.125;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 2].y = 0;
+
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 1].x = 0.125;
+	textureCoords.at(Uint(playerTextureID))
+		[currentPointer.at(Uint(playerTextureID)) - 1].y = 0.25;
+#endif
 	for(Uint i = 0; i < world -> getActorNumber(); i++)
 		linkSprite(world -> getActor(i));
 
@@ -229,19 +283,7 @@ void Renderer::populateArrays(World2D *world)
 */
 void Renderer::linkTextureCoords(FV2 *linkage, ULong imageId, Uint tileNumber)
 {
-#ifdef _VERBOSE
-	cout << endl << "RUNNING FUNCTION linkTextureCoords" << endl;
-	cout << "linkage address: " << &linkage[0] << endl;
-	cout << "current textureCoords address: " << &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))];
-	cout << endl << "Linking texture for image with ID: " << imageId << endl;
-	cout << "With current pointer location: " <<
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].x << " " <<
-	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))].y << endl <<
-	" with address: " << &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))] << 
-	" and current pointer at " << currentPointer.at(Uint(imageId)) << endl;
-#endif
 	if(textureCoords.empty()) return;
-	//linkage = &textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId))];
 	/*
 	texture pattern
 	0,0
@@ -261,9 +303,6 @@ void Renderer::linkTextureCoords(FV2 *linkage, ULong imageId, Uint tileNumber)
 	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 3] = linkage[3];
 	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 4] = linkage[4];
 	textureCoords.at(Uint(imageId))[currentPointer.at(Uint(imageId)) + 5] = linkage[5];
-#ifdef _VERBOSE
-	cout << "The new address of linkage: " << &linkage[0] << endl << endl;
-#endif
 }
 
 Pos2D Renderer::getImageSize(Uint index) const
@@ -362,9 +401,6 @@ bool Renderer::loadImage(string imageName, string desc, Pos2D chunkSize, ULong *
 			return true;
 		}
 	}
-#ifdef _VERBOSE
-	cout << "loading image: " << imageName <<endl;
-#endif
 	currentImage = new Image(imageName, desc, chunkSize);
 #ifdef _VERBOSE
 	cout << "image: " << imageName << " loaded" << endl;

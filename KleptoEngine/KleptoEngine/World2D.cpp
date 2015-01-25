@@ -175,15 +175,15 @@ Pos2D World2D::getDimensions(void)		const {return getSize();}
 Uint World2D::getTileTexture(Pos2D tilePos) const 
 { 
 	ULong tileId = getTileAt(tilePos);
-	if(tileId == ERROR_INTEGER) return tileId;
-	return tileSet.at(tileId).getImageIndex(); 
+	if(tileId == ERROR_INTEGER) return Uint(tileId);
+	return Uint(tileSet.at(Uint(tileId)).getImageIndex()); 
 }
 
 bool World2D::isPassable(Pos2D tilePos)	const
 {
 	ULong tileId = getTileAt(tilePos);
 	if(tileId == ERROR_INTEGER) return false;
-	else return tileSet.at(tileId).getPass();
+	else return tileSet.at(Uint(tileId)).getPass();
 }
 
 ULong World2D::getTileAt(Pos2D pos)		const
@@ -219,14 +219,14 @@ void World2D::updateTileTexture(Renderer * render)
 #ifdef _VERBOSE
 	cout << endl << "Running the update texture routine for world: " << getName() << endl  << endl;
 #endif
-	Pos2D divisions = render -> getImageDivisions(*textureId);
-	Pos2D imageSize = render -> getImageSize(*textureId);
+	Pos2D divisions = render -> getImageDivisions(Uint(*textureId));
+	Pos2D imageSize = render -> getImageSize(Uint(*textureId));
 
 	/* now that we have the division 
 	size we need to loop through
 	the tile list and update all
 	the tile divisions*/
-	for(int i = 0; i < tileSet.size(); i++)
+	for(Uint i = 0; i < tileSet.size(); i++)
 	{
 		tileSet.at(i).setChunkNumber(divisions);
 		tileSet.at(i).setImageDimensions(imageSize);
@@ -240,12 +240,7 @@ void World2D::updateTileTexture(Renderer * render)
 }
 
 FV2 * World2D::getTileTextureCoords(Pos2D location)
-{
-#ifdef _VERBOSE
-	cout << "getting tile texture coords from the world at address: " << &tileSet.at(getTileAt(location)).getTextureCoords()[0] << endl;
-#endif
-	return tileSet.at(getTileAt(location)).getTextureCoords();
-}
+{ return tileSet.at(Uint(getTileAt(location))).getTextureCoords(); }
 
 void World2D::setTileMap(string imageName, Pos2D divisionSize, Renderer * render)
 {

@@ -173,6 +173,14 @@ class World2D : public BasicEntity
 		void setTileSize(Pos2D dimensions);
 		void addTileToSet(string name, string desc, bool pass);
 		void addTileToSet(string name, string desc, Uint textureId, bool pass);
+		/*
+			addSprite builds a sprite entity and adds it to the list of
+			sprites that are currently available to the world, there
+			are two types of sprites currently, being: players and actors.
+
+			Actors are autonomous NPCs while players are playable only sprites
+			currently only one player can be generated per world
+		*/
 		void addSprite(string name, string desc, Pos2D size, FV2 initPos, 
 					   Uint topSpeed, string imageName, Renderer * render,
 					   Pos2D imageSeparations, SpriteType type);
