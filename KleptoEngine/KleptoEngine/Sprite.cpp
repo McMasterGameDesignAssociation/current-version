@@ -43,6 +43,10 @@ BasicObject(id, name, desc, size), pixels(new IV2[6]), speed(0), maxSpeed(topSpe
 	else position = initPos;
 }
 
+Sprite::Sprite(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed, bool isAnimated, SpriteType chosenType) :
+Sprite(id, name, desc, size, initPos, topSpeed, chosenType) {changeAnimation(isAnimated);}
+
+
 /*
     Set pointer location gives a linkage between the renderer
     and actors in the world, this will allow for the renderer
@@ -75,6 +79,7 @@ FV2 Sprite::getPosition(void) const {return position;}
 void Sprite::setUpSquare(void)
 {
 	Pos2D size = getSize();
+	size.x = size.x >> 1, size.y = size.y >> 1;
 	/*
 	[3] [2]
 	[0] [1]
@@ -82,13 +87,17 @@ void Sprite::setUpSquare(void)
 	[1] [2]
 	[0]
 
-	[5]
+		[5]
 	[3] [4]
+
+		[3]
+	[5] [4]
 	*/
-	pixels[0].x = pixels[3].x = pixels[1].x = int(position.x - size.x*0.5);
-	pixels[0].y = pixels[3].y = pixels[4].y = int(position.y - size.y*0.5);
-	pixels[2].x = pixels[4].x = pixels[5].x = int(position.x + size.x*0.5);
-	pixels[1].y = pixels[2].y = pixels[5].y = int(position.y + size.y*0.5);
+	
+	pixels[0].x = pixels[5].x = pixels[1].x = int(position.x - size.x);
+	pixels[0].y = pixels[5].y = pixels[4].y = int(position.y - size.y);
+	pixels[2].x = pixels[4].x = pixels[3].x = int(position.x + size.x);
+	pixels[1].y = pixels[2].y = pixels[3].y = int(position.y + size.y);
 }
 
 /*
@@ -127,6 +136,28 @@ vector<Pos2D> Sprite::rayTrace(World2D* world, Pos2D start, Pos2D end)
 	return intersection;
 }
 
+void Sprite::updateFramePosition(void)
+{
+	//First make sure that the texture is in
+	//a valid position, i.e. between the minimum
+	//and maximum values for the slider
+	if(animationStep == maximumTextureIndex && isAnimated()) 
+		animationStep = minimumTextureIndex;
+	else if(isAnimated()) animationStep++;
+
+	//This part of the code moves the texture
+	//slider to the correct position for the
+	//sprite that is being rendered
+	FV2 tileSize = getRelativeTileSize();
+	FV2 *pointSet = new FV2[2];
+	pointSet[0] = FV2((tileSize.x * (animationStep)), 1 - (tileSize.y * (currentTextureRow + 1)));
+	pointSet[1] = FV2((tileSize.x * (animationStep + 1)), 1 - (tileSize.y * (currentTextureRow)));
+	//cout << endl << pointSet[0].x << " " << pointSet[0].y << endl;
+	//cout << pointSet[1].x << " " << pointSet[1].y << endl;
+	moveCoordTo(pointSet);
+	delete[] pointSet;
+}
+
 /*
     updatePosition checks for collision then moves the 
     position of the sprite.
@@ -140,23 +171,53 @@ vector<Pos2D> Sprite::rayTrace(World2D* world, Pos2D start, Pos2D end)
 */
 void Sprite::updatePosition(World2D * world)
 {
+	//I am not sure what the increment is for
+	//My best guess is that this is how big
+	//each texture tile is
 	FV2 increment = FV2(0, 0);
+
+	//pos is used as part of the collision
+	//detection, so that the sprite nows
+	//how large of an area to check when it
+	//is being moved around
 	Pos2D pos = world->getDefaultTileSize();
+
+	//The check is used to check 
+	//whether or not the sprite 
+	//has collided with an object
+	//in the world space
 	bool check = true;
 
+	//
 	Pos2D currentPoint, maximumPoint;
-	currentPoint.x;
 
-	IV2 size = IV2(int(getSize().x*0.5), int(getSize().y*0.5));
+	//Size is used to fit the sprite in the current world
+	//we perform a bitwise shift of 1 to the left to divide
+	//by two effectively and effeciently i.e. x >> 1 == x*0.5
+	IV2 size = IV2((int(getSize().x >> 1) - 1), int((getSize().y >> 1) - 1));
+
+	//processAngle is used to find the x and y components of the
+	//movement direction of the current sprite, this step converts
+	//degress to radians to be processed by the math library
 	double processAngle = TO_RAD(direction);
+	
+	//nextPos takes the angle of the direction and determines
+	//the x and y components of the next position
 	FV2 nextPos(sin(processAngle), cos(processAngle));
+
+	//get new position by multiplying by the speed
 	nextPos *= speed;
+
+	//All the of next section of code handles how the 
+	//sprite moves in the space, aswell as calculates
+	//the collisions
+
 	FV2 tempPosition = nextPos + position;
 	double posInv[] = { 1 / double(pos.x), 1 / double(pos.y)};
-	currentPoint.x = ULong((tempPosition.x - size.x - 1)*posInv[0]);
-	currentPoint.y = ULong((tempPosition.y - size.y - 1)*posInv[1]);
-	maximumPoint.x = ULong((tempPosition.x + size.x - 1)*posInv[0]);
-	maximumPoint.y = ULong((tempPosition.y + size.y - 1)*posInv[1]);
+	currentPoint.x = ULong((tempPosition.x - size.x)*posInv[0]);
+	currentPoint.y = ULong((tempPosition.y - size.y)*posInv[1]);
+	maximumPoint.x = ULong((tempPosition.x + size.x)*posInv[0]);
+	maximumPoint.y = ULong((tempPosition.y + size.y)*posInv[1]);
 	increment.x = (double(pos.x) / double(getSize().x))*(maximumPoint.x - currentPoint.x);
 	increment.y = (double(pos.y) / double(getSize().y))*(maximumPoint.y - currentPoint.y);
 	for(double i = double(currentPoint.x); i < double(maximumPoint.x); i += increment.x)
@@ -172,7 +233,17 @@ void Sprite::updatePosition(World2D * world)
 	check &= world->isPassable(maximumPoint);
 	if(check)
 	{
+		//Increment the animation frame
+		updateFramePosition();
+
+		//if the sprite doesn't collide 
+		//with anything then the new position 
+		//will be the calculated position
 		position = tempPosition;
+
+		//Set up the draw data, and 
+		//the texture data of the 
+		//current sprite's data
 		setUpSquare();
 	}
 }

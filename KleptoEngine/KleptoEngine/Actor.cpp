@@ -25,4 +25,8 @@ Sprite(id, name, desc, size, initPos, topSpeed, ActorToken), actorAI(startAI) {}
 Actor::Actor(Uint id, string name, string desc, FV2 initPos, Pos2D size, Uint topSpeed) :
 Sprite(id, name, desc, size, initPos, topSpeed, ActorToken) {}
 
+Actor::Actor(Uint id, string name, string desc, FV2 initPos, Pos2D size, Uint topSpeed, bool isAnimated) :
+Sprite(id, name, desc, size, initPos, topSpeed, isAnimated, ActorToken) {}
+
+
 #endif

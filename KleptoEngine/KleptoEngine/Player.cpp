@@ -10,7 +10,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARsE.
+OTHER DEALINGS IN THE SOFTWARE.
 */
 #ifndef PLAYER_M
 #define PLAYER_M
@@ -20,5 +20,8 @@ OTHER DEALINGS IN THE SOFTWARsE.
 Player::Player(void) : Sprite(PlayerToken) {}
 Player::Player(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed) :
 Sprite(id, name, desc, size, initPos, topSpeed, PlayerToken) {}
+
+Player::Player(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed, bool isAnimated) :
+Sprite(id, name, desc, size, initPos, topSpeed, isAnimated, PlayerToken) {}
 
 #endif

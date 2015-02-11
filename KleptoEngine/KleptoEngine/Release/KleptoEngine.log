@@ -1,17 +1,13 @@
-﻿Build started 2015-01-23 11:50:15 AM.
+﻿Build started 2015-01-25 7:40:42 PM.
      1>Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/Include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Actor.cpp BasicObject.cpp Image.cpp Player.cpp Renderer.cpp Source.cpp Sprite.cpp Tile.cpp World2D.cpp WorldObject2D.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/Include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Actor.cpp Renderer.cpp Source.cpp Sprite.cpp World2D.cpp
          Actor.cpp
-         BasicObject.cpp
-         Image.cpp
-         Player.cpp
          Renderer.cpp
+     1>Renderer.cpp(205): warning C4244: 'initializing' : conversion from 'ULong' to 'Uint', possible loss of data
          Source.cpp
          Sprite.cpp
-         Tile.cpp
          World2D.cpp
-         WorldObject2D.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Release\KleptoEngine.exe" /NOLOGO /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Lib/Release" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/libs/x86" freeglut.lib libpng16.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Release\KleptoEngine.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Release\KleptoEngine.lib" /MACHINE:X86 /SAFESEH Release\Actor.obj
          Release\BasicEntity.obj
@@ -32,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:12.23
+Time Elapsed 00:00:07.01

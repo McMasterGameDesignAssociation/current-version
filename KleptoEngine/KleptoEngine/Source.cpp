@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
 	cout << "Debug mode" << endl << endl; 
 #endif
 	testWorld.setDimensions(Pos2D(30, 30));
-	testWorld.setTileSize(Pos2D(128, 128));
+	testWorld.setTileSize(Pos2D(64, 64));
 	
 #ifdef _DEBUG
 	cout << "generating tile lists" << endl;
@@ -130,10 +130,18 @@ int main(int argc, char* argv[])
 	cout << "tile map loaded successfully" << endl << endl;
 #endif
 
-	testWorld.addSprite("Player 0", "The current Player", Pos2D(128, 128), FV2(196, 196), 10, "Assets\\test_subject_2.png", &testRender, Pos2D(7, 4), PlayerToken);
-	testWorld.addSprite("Actor 0", "The first actor", Pos2D(30, 30), FV2(30, 70), 10, "Assets\\test_subject_2.png", &testRender, Pos2D(7, 4), ActorToken);
-	//testWorld.addSprite("Actor 1", "The second actor", Pos2D(30, 30), FV2(30, 140), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
-	//testWorld.addSprite("Actor 2", "The third actor", Pos2D(30, 30), FV2(50, 250), 10, "Assets\\Charactersforreal.png", &testRender, Pos2D(7, 4), ActorToken);
+	testWorld.addSprite("Player 0", "The current Player", Pos2D(128, 128), 
+						FV2(136,136), 10, "Assets\\test_subject_2.png", 
+						&testRender, Pos2D(8, 4), true, PlayerToken);
+	testWorld.addSprite("Actor 0", "The first actor", Pos2D(64, 64), 
+						 FV2(96, 70), 10, "Assets\\test_subject_3.png", 
+						 &testRender, Pos2D(8, 4), false, ActorToken);
+	testWorld.addSprite("Actor 1", "The second actor", Pos2D(64, 64), 
+					     FV2(96, 90), 10, "Assets\\Charactersforreal.png", 
+						 &testRender, Pos2D(8, 4), false, ActorToken);
+	testWorld.addSprite("Actor 2", "The third actor", Pos2D(64, 64), 
+						 FV2(96, 150), 10, "Assets\\Charactersforreal.png", 
+						 &testRender, Pos2D(8, 4), true, ActorToken);
 
 #ifdef _DEBUG
 	cout << "Finished image load in" << endl;

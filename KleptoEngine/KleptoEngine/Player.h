@@ -25,6 +25,7 @@ class Player : public Sprite
 		friend Renderer;
 		Player(void);
 		Player(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed);
+		Player(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed, bool isAnimated);
 };
 
 #endif

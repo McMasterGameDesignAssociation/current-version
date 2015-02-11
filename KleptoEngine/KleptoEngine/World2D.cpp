@@ -197,18 +197,28 @@ Pos2D World2D::getDefaultTileSize(void) const {return defaultTileSize;}
 
 void World2D::addSprite(string name, string desc, Pos2D size, FV2 initPos,
 	Uint topSpeed, string imageName, Renderer * render,
-	Pos2D imageSeparations, SpriteType type)
+	Pos2D imageSeparations, bool isAnimated, SpriteType type)
 { 
 	if(type == PlayerToken)
 	{
-		currentPlayer = new Player(0, name, desc, size, initPos, topSpeed);
-		render->loadImage(imageName, desc + " image", imageSeparations, currentPlayer->getTextureId());
+		currentPlayer = new Player(0, name, desc, size, initPos, topSpeed, isAnimated);
+		render->loadImage(imageName, desc + " image", imageSeparations, currentPlayer->getTextureId(),  SpriteMap);
+		Pos2D imageSize = render->getImageSize(*currentPlayer->getTextureId());
+		currentPlayer->setRelativeTileSize(imageSize, imageSeparations);
+#ifdef _DEBUG
+		cout << "Player image size is: " << imageSize.x << " " << imageSize.y << endl;
+#endif
 	}
 	else if(type == ActorToken)
 	{
-		Actor * temp = new Actor(actorSet.size(), name, desc, initPos, size, topSpeed);
-		render->loadImage(imageName, desc + " image", imageSeparations, currentPlayer->getTextureId());
+		Actor * temp = new Actor(actorSet.size(), name, desc, initPos, size, topSpeed, isAnimated);
+		render->loadImage(imageName, desc + " image", imageSeparations, temp->getTextureId(), SpriteMap);
+		Pos2D imageSize = render->getImageSize(*temp->getTextureId());
+		temp->setRelativeTileSize(imageSize, imageSeparations);
 		actorSet.push_back(temp);
+#ifdef _DEBUG
+		cout << "Actor image size is: " << imageSize.x << " " << imageSize.y << endl;
+#endif
 	}
 }
 
@@ -248,7 +258,7 @@ void World2D::setTileMap(string imageName, Pos2D divisionSize, Renderer * render
 	cout << "renderer location " << &render << "loading image" << endl;
 #endif
 	//Load the image into the system
-	render->loadImage(imageName, "texture data for world: " + getName(), divisionSize, textureId);
+	render->loadImage(imageName, "texture data for world: " + getName(), divisionSize, textureId, TileMap);
 }
 
 void World2D::testRayTrace(Pos2D start, Pos2D end)

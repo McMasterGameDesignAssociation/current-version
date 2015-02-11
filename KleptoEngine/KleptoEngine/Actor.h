@@ -33,6 +33,7 @@ class Actor : public Sprite
 		Actor(AI startAI);
 		Actor(Uint id, string name, string desc, FV2 initPos, Pos2D size, Uint topSpeed, AI startAI);
 		Actor(Uint id, string name, string desc, FV2 initPos, Pos2D size, Uint topSpeed);
+		Actor(Uint id, string name, string desc, FV2 initPos, Pos2D size, Uint topSpeed, bool isAnimated);
 
 		void queueMove(atomicChoice nextMove);
 		void changeBehavior(string routineName, AI ai);

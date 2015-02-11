@@ -100,7 +100,7 @@ class Renderer
 		//not need to occur in the draw cycles
 		void linkSprite(Sprite * sprite);
 		void linkTextureCoords(FV2 * linkage, ULong textureId, Uint tileNumber);
-		bool loadImage(string imageName, string desc, Pos2D chunkSize, ULong * linkId);
+		bool loadImage(string imageName, string desc, Pos2D chunkSize, ULong * linkId, ImageType imageType);
 
 		/*
 		getImageDivisions, returns the image divisions at a specific

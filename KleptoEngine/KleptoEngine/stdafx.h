@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARsE.
 #include <string>
 #include <cstdlib>
 #include <signal.h>
+#include <bitset>
 
 //OS selection and verification
 #if (defined(_WIN32) || defined(_WIN64))
@@ -85,6 +86,7 @@ struct atomicChoice
 
 static enum ItemType { Clothing, Electronics, Jewelry, SportsEquipment, Novelty };
 static enum SpriteType { PlayerToken, ActorToken };
+static enum ImageType { SpriteMap, TileMap, ObjectMap };
 using namespace std;
 
 #endif

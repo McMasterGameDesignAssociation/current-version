@@ -43,6 +43,19 @@ ULong * BasicObject::getTextureId(void) {return &textureId[0];}
 void BasicObject::setChunkNumber(Pos2D xyNumber) {chunkNumber = xyNumber;}
 void BasicObject::setImageDimensions(Pos2D size) { imageDimensions = size; }
 
+void BasicObject::setRelativeTileSize(Pos2D textureMapSize, Pos2D textureDivisions)
+{
+	relativeTileSize = 
+		FV2(double(textureMapSize.x) / double(textureDivisions.x) / double(textureMapSize.x),
+			double(textureMapSize.y) / double(textureDivisions.y) / double(textureMapSize.y));
+#ifdef _DEBUG
+	cout << "Tile size set to: " << relativeTileSize.x << " " << relativeTileSize.y << endl;
+	cout << "For object: " << getName() << endl;
+#endif
+}
+
+FV2 BasicObject::getRelativeTileSize(void) const {return relativeTileSize;}
+
 ULong BasicObject::getTextureValue(void) const { return *textureId; }
 
 Pos2D BasicObject::getImageSize(void) const { return imageDimensions; }
@@ -51,10 +64,8 @@ Pos2D BasicObject::getImageDivisions(void) const { return chunkNumber; }
 void BasicObject::moveCoordTo(FV2 * xyNumber)
 {
 #ifdef _VERBOSE
-	cout << "moving the texture coords to new position" << endl;
+	//cout << "moving the texture coords to new position" << endl;
 #endif
-	//FV2 start = FV2(0.125, 0.875);
-	//FV2 end = FV2(0.25, 0.750);
 	FV2 start = xyNumber[0];
 	FV2 end = xyNumber[1];
 	/*

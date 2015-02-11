@@ -29,12 +29,39 @@ class Sprite : public BasicObject
 		SpriteType type;
 		void setUpSquare(void);
 		
+		//We need some animation components
+
+		/*
+			animation step lets the sprite
+			know the intended column that
+			the texture is coming from
+		*/
+		Uint animationStep = 0;
+
+		/*
+			currentTextureRow, is the row
+			that the texture comes from
+		*/
+		Uint currentTextureRow = 0;
+
+		/*
+			This gives the largest value of
+			the texturing index, so that the
+			textures will wrap at 
+			the specified location
+		*/
+		Uint maximumTextureIndex = 6;
+		Uint minimumTextureIndex = 0;
+
+		void updateFramePosition(void);
+
 	protected:
 		friend Renderer;
 		Sprite(SpriteType chosenType);
 		Sprite(FV2 initPos, Uint topSpeed, SpriteType chosenType);
 		Sprite(ULong id, string name, string desc, FV2 initPos, Uint topSpeed, SpriteType chosenType);
 		Sprite(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed, SpriteType chosenType);
+		Sprite(ULong id, string name, string desc, Pos2D size, FV2 initPos, Uint topSpeed, bool isAnimated, SpriteType chosenType);
 
 		void changePosition(FV2 newPos);
 		void changeSpeed(Uint newSpeed);

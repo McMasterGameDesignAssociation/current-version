@@ -19,7 +19,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 Image::Image(const char* startImage, Pos2D imageDivison) : 
 BasicEntity(startImage, "Image"), hasAlpha(false), imageAvailable(false), 
-textureBinary(NULL), divisionNumber(imageDivison), temporaryFile(NULL)
+textureBinary(NULL), divisionNumber(imageDivison), temporaryFile(NULL), type(TileMap)
 {
 	glGenTextures(1, &texture);
 	readImage();
@@ -27,7 +27,15 @@ textureBinary(NULL), divisionNumber(imageDivison), temporaryFile(NULL)
 
 Image::Image(string startImage, string desc, Pos2D imageDivision) : 
 BasicEntity(startImage, desc), hasAlpha(false), imageAvailable(false),
-textureBinary(NULL), divisionNumber(imageDivision), temporaryFile(NULL)
+textureBinary(NULL), divisionNumber(imageDivision), temporaryFile(NULL), type(TileMap)
+{
+	glGenTextures(1, &texture);
+	readImage();
+}
+
+Image::Image(string startImage, string desc, Pos2D imageDivision, ImageType setType) :
+BasicEntity(startImage, desc), hasAlpha(false), imageAvailable(false),
+textureBinary(NULL), divisionNumber(imageDivision), temporaryFile(NULL), type(setType)
 {
 	glGenTextures(1, &texture);
 	readImage();
@@ -38,6 +46,8 @@ Image::~Image(void)
 	glDeleteTextures(1, &texture);
 	//delete[] textureBinary;
 }
+
+ImageType Image::getType(void) const { return type; }
 
 Pos2D Image::getDivisionSize(void) const { return divisionNumber; }
 

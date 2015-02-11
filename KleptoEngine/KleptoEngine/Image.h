@@ -42,10 +42,18 @@ class Image : public BasicEntity
 		void readImage(void);
 		bool validatePNG(void);
 
+		//type is used to identify what kind of
+		//image file this image is, if the image
+		//can be overlapped then it will have
+		//to be stored as a Sprite or Object map
+		//While tiles don't overlap
+		ImageType type;
+
 	protected:
 		friend Renderer;
 		Image(const char* startImage, Pos2D chunkDim);
 		Image(string startImage, string desc, Pos2D chunkDim);
+		Image(string startImage, string desc, Pos2D chunkDim, ImageType setType);
 
 		void enableSetUp(void);
 		void disableSetUp(void);
@@ -57,6 +65,7 @@ class Image : public BasicEntity
 		FV2 getRelativeSize(void) const;
 
 		Pos2D getDivisionSize(void) const;
+		ImageType getType(void) const;
 
 	public:
 		~Image(void);

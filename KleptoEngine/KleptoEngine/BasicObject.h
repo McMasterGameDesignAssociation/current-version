@@ -1,6 +1,6 @@
 /*
 COPYRIGHT BENJAMIN ISHERWOOD 23/10/2014
-THIS SOFTWARE IS INTENDED FOR OPEN SOURCE USE, REDISTRIBUTION
+THIS SOFTW ARE IS INTENDED FOR OPEN SOURCE USE, REDISTRIBUTION
 IS ENCOURAGE
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -31,8 +31,10 @@ OTHER DEALINGS IN THE SOFTWARsE.
 class BasicObject : public BasicEntity
 {
 	private:
-		//bitmapName is used to make sure
-		//the correct image is available
+		/*
+			bitmapName is used to make sure
+			the correct image is available
+		*/
 		string bitmapName;
 
 		//Can animate is used to tell the
@@ -54,22 +56,36 @@ class BasicObject : public BasicEntity
 		*/
 		Pos2D imageDimensions;
 
-		/*TextureId is used to 
-		make the render process 
-		much much faster, i.e. 
-		not forcing a swap when 
-		more objects are attached 
-		to the same asset textureId 
-		refers to the position 
-		in the vector that an 
-		image is stored*/
+		/*
+			TextureId is used to 
+			make the render process 
+			much much faster, i.e. 
+			not forcing a swap when 
+			more objects are attached 
+			to the same asset textureId 
+			refers to the position 
+			in the vector that an 
+			image is stored
+		*/
 		ULong * textureId;
 
-		//Texture coords are the 2D floating point
-		//values of the bitmap coordinates, since
-		//all bitmap sliders are marked as a percentage
-		//of the image i.e. values between 0.0 - 1.0
+		/*
+			Texture coords are the 2D floating point
+			values of the bitmap coordinates, since
+			all bitmap sliders are marked as a percentage
+			of the image i.e. values between 0.0 - 1.0
+		*/
 		FV2 * textureCoords;
+
+		FV2	relativeTileSize;
+
+		/*
+			dirty is a boolean used to determine if
+			the object is ready for update in the animation
+			cycle, i.e. during the update cycle if the node
+			is marked dirty then run the update routines
+		*/
+		bool dirty = true;
 
 	protected:
 		BasicObject(void);
@@ -115,24 +131,37 @@ class BasicObject : public BasicEntity
 
 		Pos2D getImageSize(void) const;
 		Pos2D getImageDivisions(void) const;
+		FV2 getRelativeTileSize(void) const;
 
-		//linkTextureCoords links the objects
-		//texture pointer to the render's draw
-		//pointers
+		/*
+			linkTextureCoords links the objects
+			texture pointer to the render's draw
+			pointers
+		*/
 		void linkTextureCoords(FV2 *newCoords);
 
-		//moveCoordTo moves the current location
-		//of the texture slider to the 
-		//xy positions by expanding the
-		//2, 2D vectors into 6
+		/*
+			moveCoordTo moves the current location
+			of the texture slider to the 
+			xy positions by expanding the
+			2, 2D vectors into 6
+		*/
 		void moveCoordTo(FV2 * newCoords);
 
-		//getTextureId is used to get the address
-		//of the textureId. This is helpful when
-		//linking sprites to the render pipeline
+		/*
+			getTextureId is used to get the address
+			of the textureId. This is helpful when
+			linking sprites to the render pipeline
+		*/
 		ULong * getTextureId(void);
 		ULong getTextureValue(void) const;
 		FV2 * getTextureCoords(void);
+		bool isDirty(void) const;
+		void makeObjectDirty(void);
+		void cleanObject(void);
+
+		void setRelativeTileSize(Pos2D textureMapSize, Pos2D textureDivisions);
+
 };
 
 #endif

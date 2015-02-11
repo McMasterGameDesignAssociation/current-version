@@ -45,8 +45,8 @@ class BasicEntity
 		//entitySize is an integer value of x and y
 		//values that is used to describe the size of
 		//the entity
-		Pos2D	entitySize;
-	
+		Pos2D	entitySize;		
+
 	protected:
 		BasicEntity(void);
 		BasicEntity(ULong id, string name, string desc);

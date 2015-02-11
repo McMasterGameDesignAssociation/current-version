@@ -92,8 +92,9 @@ void Renderer::linkSprite(Sprite * sprite)
 	else if(sprite->getType() == PlayerToken) testColor = FV3(1, 1, 1);
 	for(int i = 0; i < 6; i++) basicBuffer.at(Uint(index))[currentPointer.at(Uint(index)) + i] = testColor;
 	sprite->setLocationPointer(&pixels.at(Uint(index))[currentPointer.at(Uint(index))]);
-	sprite->linkTextureCoords(textureCoords.at(Uint(index)));
+	sprite->linkTextureCoords(&textureCoords.at(Uint(index))[currentPointer.at(Uint(index))]);
 	currentPointer.at(Uint(index)) += 6;
+	sprite->updateFramePosition();
 }
 
 void Renderer::setNewMax(ULong nodes, ULong id)
@@ -125,12 +126,29 @@ void Renderer::render(void)
 	for(Uint i = 0; i < imageFiles.size(); i++)
 	{
 		imageFiles.at(i).enableSetUp();
-		glVertexPointer(2, GL_INT, 0, pixels.at(i));
-		glTexCoordPointer(2, GL_DOUBLE, 0, textureCoords.at(i));
-		glColorPointer(3, GL_DOUBLE, 0, basicBuffer.at(i));
-		glDrawArrays(GL_TRIANGLES, 0, GLsizei(currentPointer.at(i)));
+		switch(imageFiles.at(i).getType())
+		{
+			case SpriteMap:
+				for(int j = 0; j < currentPointer.at(i); j += 6)
+				{
+					glVertexPointer(2, GL_INT, 0, pixels.at(i));
+					glTexCoordPointer(2, GL_DOUBLE, 0, textureCoords.at(i));
+					glColorPointer(3, GL_DOUBLE, 0, basicBuffer.at(i));
+					glDrawArrays(GL_TRIANGLES, j, 6);
+					glClear(GL_DEPTH_BUFFER_BIT);
+				}
+				break;
+			case TileMap:
+				glVertexPointer(2, GL_INT, 0, pixels.at(i));
+				glTexCoordPointer(2, GL_DOUBLE, 0, textureCoords.at(i));
+				glColorPointer(3, GL_DOUBLE, 0, basicBuffer.at(i));
+				glDrawArrays(GL_TRIANGLES, 0, currentPointer.at(i));
+				glClear(GL_DEPTH_BUFFER_BIT);
+			default:
+				break;
+
+		}
 		imageFiles.at(i).disableSetUp();
-		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -194,26 +212,10 @@ void Renderer::populateArrays(World2D *world)
 #ifdef _VERBOSE
 	cout << "building tile lists" << endl;
 #endif
-	/*
-		Next link the texture coordinates for the 
-		player sprite use the sprite linkage, and
-		not the renderer linkage
-	*/
-	//First get the player address
-	Player *playerStandIn = world->getPlayer();
-	//next get the texture ID for the player
-	Uint playerTextureID = playerStandIn->getTextureValue();
-	//next retrieve the image data that belongs to the player
-	//then link the image texture data 
-	//to the player texture data
-#ifdef _VERBOSE
-	cout << "Currrently populating the player texture coordinates" << endl << "player has address: " << &playerStandIn << endl;
-#endif
-	//Finally increment the current 
-	//pointer for the image that the 
-	//player belongs to
-	
 
+#ifdef _VERBOSE
+	cout << "Currrently populating the player texture coordinates" << endl;
+#endif
 	/*
 	All tiles are passive, and there is a lot more
 	address in the renderer's texture coordinates
@@ -240,40 +242,32 @@ void Renderer::populateArrays(World2D *world)
 		}
 	}
 
-	if(world->verifyPlayer()) linkSprite(world->getPlayer());
+	if(world->verifyPlayer())
+	{
+		//Once we know that the world contains
+		//the player it is time to link the player
+		//to the draw
+		linkSprite(world->getPlayer());
+		//Now we need to update the texture information
+		//that the player uses for its draw process
+	}
 #ifdef _VERBOSE
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 6].x = 0;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 6].y = 0;
-
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 5].x = 0;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 5].y = 0.25;
-
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 4].x = 0.125;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 4].y = 0.25;
-
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 3].x = 0;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 3].y = 0;
-
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 2].x = 0.125;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 2].y = 0;
-
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 1].x = 0.125;
-	textureCoords.at(Uint(playerTextureID))
-		[currentPointer.at(Uint(playerTextureID)) - 1].y = 0.25;
+	ULong playerTextureID = world->getPlayer()->getTextureValue();
+	cout << "total images in library: " << imageFiles.size() << endl;
+	cout << "player texture ID: " << playerTextureID << endl;
+	cout << "name of player texture: " << imageFiles.at(playerTextureID - 1).getName() << endl;
 #endif
-	for(Uint i = 0; i < world -> getActorNumber(); i++)
-		linkSprite(world -> getActor(i));
+	for(Uint i = 0; i < world->getActorNumber(); i++)
+	{
+		linkSprite(world->getActor(i));
+#ifdef _VERBOSE
+		playerTextureID = world->getActor(i)->getTextureValue();
+		cout << "total images in library: " << imageFiles.size() << endl;
+		cout << "Actor texture ID: " << playerTextureID << endl;
+		cout << "name of Actor texture: " << imageFiles.at(playerTextureID - 1).getName() << endl;
+#endif
+
+	}
 
 }
 
@@ -381,7 +375,7 @@ void Renderer::addImage(Image image)
 		a.	If the image exists link the image id to the 
 			object that loaded it
 */
-bool Renderer::loadImage(string imageName, string desc, Pos2D chunkSize, ULong *linkId)
+bool Renderer::loadImage(string imageName, string desc, Pos2D chunkSize, ULong *linkId, ImageType type)
 {
 #ifdef _DEBUG
 	std::cout << endl << "Loading image: " << imageName << endl;
@@ -401,7 +395,7 @@ bool Renderer::loadImage(string imageName, string desc, Pos2D chunkSize, ULong *
 			return true;
 		}
 	}
-	currentImage = new Image(imageName, desc, chunkSize);
+	currentImage = new Image(imageName, desc, chunkSize, type);
 #ifdef _VERBOSE
 	cout << "image: " << imageName << " loaded" << endl;
 #endif

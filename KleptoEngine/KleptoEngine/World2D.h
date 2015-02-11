@@ -183,7 +183,7 @@ class World2D : public BasicEntity
 		*/
 		void addSprite(string name, string desc, Pos2D size, FV2 initPos, 
 					   Uint topSpeed, string imageName, Renderer * render,
-					   Pos2D imageSeparations, SpriteType type);
+					   Pos2D imageSeparations, bool isAnimated, SpriteType type);
 		
 		void setTile(ULong setId, Pos2D location);
 		void printToConsole(void);
