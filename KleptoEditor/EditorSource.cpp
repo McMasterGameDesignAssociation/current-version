@@ -1,0 +1,50 @@
+/*
+COPYRIGHT BENJAMIN ISHERWOOD 15/02/2015
+THIS SOFTWARE IS INTENDED FOR OPEN SOURCE USE, REDISTRIBUTION
+IS ENCOURAGE
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+*/
+#ifndef KLEPTO_EDITOR_MAIN
+#define KLEPTO_EDITOR_MAIN
+
+#include "editorStdafx.h"
+
+using namespace std;
+
+void display(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	gluOrtho2D(0, 900, 0, 900);
+	glViewport(0, 0, 900, 900);
+
+	glutPostRedisplay();
+	glutSwapBuffers();
+	glFlush();
+}
+
+void main(int argc, char *argv[])
+{
+#ifdef _VERBOSE 
+	cout << "Running in VERBOSE mode" << endl;
+#elif defined(_DEBUG)
+	cout << "Running in DEBUG mode" << endl;
+#endif
+	glutInit(&argc, argv);
+	glutInitWindowSize(512, 512);
+	glutCreateWindow("Klepto Editor");
+	
+	glutDisplayFunc(display);
+
+	glutMainLoop();
+}
+
+#endif

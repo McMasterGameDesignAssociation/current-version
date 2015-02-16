@@ -1,0 +1,18 @@
+﻿Build started 2015-02-15 8:35:41 PM.
+     1>Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEditor\KleptoEditor.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\SharedFiles" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\IEEECodex" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\OpenAL/include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeType/Include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _VERBOSE /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Verbose\\" /Fd"Verbose\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\SharedFiles\VectorTypes.cpp EditorSource.cpp
+         VectorTypes.cpp
+         Generating Code...
+         Compiling...
+         EditorSource.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEditor.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\IEEECodex/libs/Debug" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\OpenAL/libs/Win32" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Lib/Release" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeType/Libs/Debug" /LIBPATH:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/libs/Debug" IEEECodex.lib "EFX-Util_MTDLL/EFX-Util.lib" "EFX-Util_MT/EFX-Util.lib" OpenAL32.lib freetype240.lib freeglut.lib libpng16.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEditor.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEditor.lib" /MACHINE:X86 Verbose\VectorTypes.obj
+         Verbose\EditorSource.obj
+         KleptoEditor.vcxproj -> C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\Verbose\KleptoEditor.exe
+     1>Done Building Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEditor\KleptoEditor.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.03
