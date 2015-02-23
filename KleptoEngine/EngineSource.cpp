@@ -27,8 +27,19 @@ void keyStateMachine(void)
 	else if(keys[1]) testWorld.changePlayerDirection(180);
 	else if(keys[2]) testWorld.changePlayerDirection(270);
 	else if(keys[3]) testWorld.changePlayerDirection(90);
-	if(keys[0] || keys[1] || keys[2] || keys[3]) testWorld.changePlayerSpeed(1);
-	else testWorld.changePlayerSpeed(0);
+	if(keys[0] || keys[1] || keys[2] || keys[3])
+	{
+		testWorld.changePlayerSpeed(1);
+		testWorld.makePlayerDirty();
+	}
+	/*
+	else if(testWorld.isPlayerDirty())
+	{
+		cout << "Player is dirty" << endl;
+		
+		testWorld.resetPlayerAnimationCycle();
+		testWorld.makePlayerClean();
+	}*/
 }
 void keyboardDown(unsigned char key, int x, int y)
 {
@@ -105,7 +116,7 @@ int main(int argc, char* argv[])
 	cout << "Debug mode" << endl << endl; 
 #endif
 	testWorld.setDimensions(Pos2D(30, 30));
-	testWorld.setTileSize(Pos2D(64, 64));
+	testWorld.setTileSize(Pos2D(32, 32));
 	
 #ifdef _DEBUG
 	cout << "generating tile lists" << endl;
@@ -113,6 +124,7 @@ int main(int argc, char* argv[])
 	testWorld.addTileToSet("testTile0", "Just a test", 0, false);
 	testWorld.addTileToSet("testTile1", "Just a test", 12, true);
 	testWorld.addTileToSet("testTile2", "Just a test", 13, false);
+	testWorld.addTileToSet("testTile1", "Just a test", 27, true);
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 9; j++)
 			testWorld.setTile(1, Pos2D(1 + i, 1 + j));
@@ -120,7 +132,7 @@ int main(int argc, char* argv[])
 	testWorld.setTile(2, Pos2D(4, 4));
 	testWorld.setTile(2, Pos2D(7, 4));
 	testWorld.setTile(2, Pos2D(4, 7));
-	testWorld.setTile(2, Pos2D(7, 7));
+	testWorld.setTile(3, Pos2D(7, 7));
 
 #ifdef _DEBUG
 	cout << endl << endl << "Reading tile map" << endl;
@@ -130,8 +142,8 @@ int main(int argc, char* argv[])
 	cout << "tile map loaded successfully" << endl << endl;
 #endif
 
-	testWorld.addSprite("Player 0", "The current Player", Pos2D(128, 128), 
-						FV2(136,136), 10, "Assets\\test_subject_2.png", 
+	testWorld.addSprite("Player 0", "The current Player", Pos2D(64, 32), 
+						FV2(96,96), 10, "Assets\\test_subject_2.png", 
 						&testRender, Pos2D(8, 4), true, PlayerToken);
 	testWorld.addSprite("Actor 0", "The first actor", Pos2D(64, 64), 
 						 FV2(96, 70), 10, "Assets\\test_subject_3.png", 

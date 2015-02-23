@@ -44,7 +44,7 @@ class Panel
 		Uint panelId = 0;
 
 		//window color is the non-texture color
-		FV3 windowColor;
+		FV3 panelColor;
 
 		//textureId is linked directly to the
 		//render pipeline, and identifies 
@@ -61,8 +61,57 @@ class Panel
 		//word regex identifier
 		string name;
 
+		//panelCorners is the array of
+		//pointers that will be in the
+		//render pipeline
+		IV2 * panelCorners;
+
+		//calculatedPositions is the
+		//array that is used to hold
+		//the current triangle information
+		//of the panel, this is used for 
+		//when the Z-index of the window is
+		//changed so that the triangle data
+		//does not need to be recalulated
+		IV2 * calculatedPositions;
+
+	protected:
+		friend Window;
+		void setId(Uint id);
+
+		//Set up square builds the
+		//triangles necessary to draw
+		//the corners of each panel
+		//by working with panelCorners
+		void setUpSquare(void);
+
+		//Link panel coords is used to
+		//link up the panel corners with
+		//the window that will be rendering
+		//the panel
+		void linkPanelCoords(IV2 * linkage);
+
 	public:
 		Panel();
+		Panel(Uint id);
+		Panel(Pos2D dims, Pos2D center, Uint zDex);
+		Panel(Pos2D dims, Pos2D center, Uint zDex, Uint ID, string desc, string setName);
+
+		void setBgColor(FV3 color);
+		void setPosition(Pos2D center);
+		void setDimensions(Pos2D dims);
+		void setZIndex(Uint zDex);
+		void changePanelPriority(PanelPriority updatePriority);
+		void setDescription(string desc);
+		void setName(string setName);
+
+		FV3 getBgColor(void) const;
+		Pos2D getPosition(void) const;
+		Pos2D getDimensions(void) const;
+		Uint getZIndex(void) const;
+		PanelPriority getPriority(void) const;
+		string getDescription(void) const;
+		string getName(void) const;
 };
 
 #endif

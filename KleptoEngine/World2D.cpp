@@ -108,7 +108,15 @@ void World2D::setTile(ULong setId, Pos2D location)
 }
 
 void World2D::changePlayerSpeed(Uint speed) {currentPlayer->changeSpeed(speed);}
-void World2D::changePlayerDirection(double  direction)  { if(verifyPlayer()) currentPlayer->changeDirection(direction); }
+
+void World2D::changePlayerDirection(double  direction)  
+{ 
+	if(verifyPlayer())
+	{
+		currentPlayer->changeDirection(direction);
+	}
+}
+
 void World2D::updateWorld(void)
 {
 	for(Uint i = 0; i < actorSet.size(); i++)
@@ -249,6 +257,8 @@ void World2D::updateTileTexture(Renderer * render)
 
 }
 
+void World2D::resetPlayerAnimationCycle(void) { currentPlayer->resetAnimationStep(); }
+
 FV2 * World2D::getTileTextureCoords(Pos2D location)
 { return tileSet.at(Uint(getTileAt(location))).getTextureCoords(); }
 
@@ -271,4 +281,9 @@ ULong World2D::getActorTexture(ULong id) const
 	if(id > actorSet.size()) return 0xFFFFFFFF;
 	return actorSet.at(Uint(id))->getTextureValue();
 }
+
+void World2D::makePlayerDirty(void) { currentPlayer->makeObjectDirty(); }
+void World2D::makePlayerClean(void) { currentPlayer->makeObjectDirty(); }
+bool World2D::isPlayerDirty(void) const { return currentPlayer->isDirty(); }
+
 #endif

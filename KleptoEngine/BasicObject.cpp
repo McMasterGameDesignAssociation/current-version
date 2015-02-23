@@ -80,4 +80,9 @@ void BasicObject::moveCoordTo(FV2 * xyNumber)
 	textureCoords[4] = FV2(end.x, start.y);
 }
 
+bool BasicObject::isDirty(void) const {return dirty;}
+void BasicObject::makeObjectDirty(void) { dirty = true; }
+void BasicObject::cleanObject(void) { dirty = false; }
+
+
 #endif

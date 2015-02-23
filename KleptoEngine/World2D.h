@@ -203,7 +203,11 @@ class World2D : public BasicEntity
 		//This returns the tileMap image id
 		ULong getTextureValue(void)		const;
 #endif
-		
+		void makePlayerDirty(void);
+		void makePlayerClean(void);
+		bool isPlayerDirty(void) const;
+
+		void resetPlayerAnimationCycle(void);
 };
 
 #endif

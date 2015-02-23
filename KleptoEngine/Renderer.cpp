@@ -345,6 +345,8 @@ void Renderer::initWindow(int argc, char *argv[])
 	glLoadIdentity();
 	gluOrtho2D(0, 900, 0, 900);
 	glViewport(0, 0, 900, 900);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 }
 void Renderer::addImage(Image image)
 {

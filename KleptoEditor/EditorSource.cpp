@@ -16,15 +16,36 @@ OTHER DEALINGS IN THE SOFTWARE.
 #define KLEPTO_EDITOR_MAIN
 
 #include "editorStdafx.h"
+#include "Window.h"
 
-using namespace std;
+Window * mainWindow;
 
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluOrtho2D(0, 900, 0, 900);
-	glViewport(0, 0, 900, 900);
+	gluOrtho2D(0, 512, 0, 512);
+	glViewport(0, 0, 512, 512);
+
+	glPointSize(mainWindow -> getPanel(0) -> getDimensions().x);
+	glColor3dv((GLdouble*)&mainWindow -> getPanel(0) -> getBgColor());
+
+	glBegin(GL_POINTS);
+	
+	glVertex2i(mainWindow->getPanel(0)->getPosition().x, 
+		mainWindow->getPanel(0)->getPosition().y);
+
+	glEnd();
+
+	glPointSize(mainWindow->getPanel(1)->getDimensions().x);
+	glColor3dv((GLdouble*)&mainWindow->getPanel(1)->getBgColor());
+
+	glBegin(GL_POINTS);
+
+	glVertex2i(mainWindow->getPanel(1)->getPosition().x,
+		mainWindow->getPanel(1)->getPosition().y);
+
+	glEnd();
 
 	glutPostRedisplay();
 	glutSwapBuffers();
@@ -38,6 +59,13 @@ void main(int argc, char *argv[])
 #elif defined(_DEBUG)
 	cout << "Running in DEBUG mode" << endl;
 #endif
+	mainWindow = new Window();
+	Panel * testPanel = new Panel(Pos2D(100, 100), Pos2D(100, 100), 1);
+	testPanel -> changePanelPriority(activePriority);
+	testPanel -> setBgColor(FV3(0.75, 0.5, 0.5));
+	mainWindow->addPanel(testPanel);
+	mainWindow->addPanel(new Panel(Pos2D(100, 100), Pos2D(200, 100), 1));
+	mainWindow->getPanel(1)->setBgColor(FV3(1, 0, 0));
 	glutInit(&argc, argv);
 	glutInitWindowSize(512, 512);
 	glutCreateWindow("Klepto Editor");

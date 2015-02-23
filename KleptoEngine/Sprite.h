@@ -78,6 +78,7 @@ class Sprite : public BasicObject
 		vector<Pos2D> rayTrace(World2D * world, Pos2D start, Pos2D end);
 
 		void updatePosition(World2D * world);
+		void resetAnimationStep(void);
 		SpriteType getType(void) const;
 };
 

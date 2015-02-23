@@ -62,7 +62,15 @@ void Sprite::setLocationPointer(IV2 *linkage)
 void Sprite::changePosition(FV2 newPos) {position = newPos;}
 void Sprite::changeSpeed(Uint newSpeed) {speed = newSpeed;}
 void Sprite::changeMaxSpeed(Uint topSpeed) {maxSpeed = topSpeed;}
-void Sprite::changeDirection(double newDirection) {direction = newDirection;}
+
+void Sprite::changeDirection(double newDirection) 
+{
+	if(newDirection < 90) currentTextureRow = 2;
+	else if(newDirection < 180) currentTextureRow = 1;
+	else if(newDirection < 270) currentTextureRow = 0;
+	else if(newDirection < 360) currentTextureRow = 3;
+	direction = newDirection;
+}
 
 double Sprite::getDirection(void) const {return direction;}
 Uint Sprite::getSpeed(void) const {return speed;}
@@ -136,14 +144,16 @@ vector<Pos2D> Sprite::rayTrace(World2D* world, Pos2D start, Pos2D end)
 	return intersection;
 }
 
+void Sprite::resetAnimationStep(void) { animationStep = 0; }
+
 void Sprite::updateFramePosition(void)
 {
 	//First make sure that the texture is in
 	//a valid position, i.e. between the minimum
 	//and maximum values for the slider
-	if(animationStep == maximumTextureIndex && isAnimated()) 
+	if(animationStep == maximumTextureIndex && isAnimated() && isDirty()) 
 		animationStep = minimumTextureIndex;
-	else if(isAnimated()) animationStep++;
+	else if(isAnimated() && isDirty()) animationStep++;
 
 	//This part of the code moves the texture
 	//slider to the correct position for the
@@ -155,6 +165,7 @@ void Sprite::updateFramePosition(void)
 	//cout << endl << pointSet[0].x << " " << pointSet[0].y << endl;
 	//cout << pointSet[1].x << " " << pointSet[1].y << endl;
 	moveCoordTo(pointSet);
+	cleanObject();
 	delete[] pointSet;
 }
 
@@ -171,6 +182,8 @@ void Sprite::updateFramePosition(void)
 */
 void Sprite::updatePosition(World2D * world)
 {
+	if(!isDirty() && animationStep != 0) animationStep = 0;
+	else if(!isDirty()) return;
 	//I am not sure what the increment is for
 	//My best guess is that this is how big
 	//each texture tile is
@@ -246,6 +259,7 @@ void Sprite::updatePosition(World2D * world)
 		//current sprite's data
 		setUpSquare();
 	}
+	speed = 0;
 }
 
 SpriteType Sprite::getType(void) const { return type; }

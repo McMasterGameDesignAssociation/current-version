@@ -97,8 +97,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\SharedFiles\VectorTypes.cpp" />
     <ClCompile Include="EditorSource.cpp" />
+    <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KleptoEngine\KleptoEngine.vcxproj">
@@ -109,6 +110,7 @@
     <ClInclude Include="..\SharedFiles\VectorTypes.h" />
     <ClInclude Include="editorStdafx.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

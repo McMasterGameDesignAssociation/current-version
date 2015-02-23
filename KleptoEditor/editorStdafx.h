@@ -17,10 +17,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "VectorTypes.h"
 #include "freeglut.h"
 #include "IEEECodex.h"
+
+class Window;
 
 enum PanelPriority 
 { 
