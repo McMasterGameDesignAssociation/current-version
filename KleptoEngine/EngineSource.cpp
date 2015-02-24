@@ -32,14 +32,6 @@ void keyStateMachine(void)
 		testWorld.changePlayerSpeed(1);
 		testWorld.makePlayerDirty();
 	}
-	/*
-	else if(testWorld.isPlayerDirty())
-	{
-		cout << "Player is dirty" << endl;
-		
-		testWorld.resetPlayerAnimationCycle();
-		testWorld.makePlayerClean();
-	}*/
 }
 void keyboardDown(unsigned char key, int x, int y)
 {
@@ -142,7 +134,7 @@ int main(int argc, char* argv[])
 	cout << "tile map loaded successfully" << endl << endl;
 #endif
 
-	testWorld.addSprite("Player 0", "The current Player", Pos2D(64, 32), 
+	testWorld.addSprite("Player 0", "The current Player", Pos2D(64, 64), 
 						FV2(96,96), 10, "Assets\\test_subject_2.png", 
 						&testRender, Pos2D(8, 4), true, PlayerToken);
 	testWorld.addSprite("Actor 0", "The first actor", Pos2D(64, 64), 

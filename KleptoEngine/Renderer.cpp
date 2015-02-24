@@ -118,7 +118,7 @@ void Renderer::render(void)
 		return;
 #endif
 	}
-	
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

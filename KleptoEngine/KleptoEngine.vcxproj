@@ -26,6 +26,7 @@
     <ClCompile Include="EngineSource.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="World2D.cpp" />
     <ClCompile Include="WorldObject2D.cpp" />
   </ItemGroup>
@@ -46,6 +47,7 @@
     <ClInclude Include="engineStdafx.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="World2D.h" />
     <ClInclude Include="WorldObject2D.h" />
   </ItemGroup>

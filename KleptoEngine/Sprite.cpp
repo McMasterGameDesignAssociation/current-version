@@ -144,7 +144,11 @@ vector<Pos2D> Sprite::rayTrace(World2D* world, Pos2D start, Pos2D end)
 	return intersection;
 }
 
-void Sprite::resetAnimationStep(void) { animationStep = 0; }
+void Sprite::resetAnimationStep(void) 
+{
+	animationStep = 0;
+	updateFramePosition();
+}
 
 void Sprite::updateFramePosition(void)
 {
@@ -182,7 +186,12 @@ void Sprite::updateFramePosition(void)
 */
 void Sprite::updatePosition(World2D * world)
 {
-	if(!isDirty() && animationStep != 0) animationStep = 0;
+	if(!isDirty() && animationStep != 0)
+	{
+		animationStep = 0;
+		updateFramePosition();
+		return;
+	}
 	else if(!isDirty()) return;
 	//I am not sure what the increment is for
 	//My best guess is that this is how big
@@ -247,7 +256,7 @@ void Sprite::updatePosition(World2D * world)
 	if(check)
 	{
 		//Increment the animation frame
-		updateFramePosition();
+		if(frameLimter.updateTimer()) updateFramePosition();
 
 		//if the sprite doesn't collide 
 		//with anything then the new position 
@@ -257,7 +266,7 @@ void Sprite::updatePosition(World2D * world)
 		//Set up the draw data, and 
 		//the texture data of the 
 		//current sprite's data
-		setUpSquare();
+		 setUpSquare();
 	}
 	speed = 0;
 }

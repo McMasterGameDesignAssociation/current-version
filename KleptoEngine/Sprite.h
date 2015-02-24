@@ -21,6 +21,7 @@ OTHER DEALINGS IN THE SOFTWARsE.
 class Sprite : public BasicObject
 {
 	private:
+		Timer frameLimter = Timer(30);
 		FV2 position;
 		Uint speed;
 		Uint maxSpeed;

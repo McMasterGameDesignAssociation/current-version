@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARsE.
 class Renderer
 {
 	private:
+		Timer frameLimiter = Timer(45);
 		//Dimensions are the size of the screen
 		Pos2D dimensions;
 		

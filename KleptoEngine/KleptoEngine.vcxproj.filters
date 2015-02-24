@@ -84,6 +84,9 @@
     <ClCompile Include="..\SharedFiles\VectorTypes.cpp">
       <Filter>Resource Files\ResourceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Resource Files\ResourceClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseEntity.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="..\SharedFiles\VectorTypes.h">
       <Filter>Header Files\GameClasses\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Resource Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

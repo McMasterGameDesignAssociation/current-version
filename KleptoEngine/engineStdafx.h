@@ -42,6 +42,7 @@ OTHER DEALINGS IN THE SOFTWARsE.
 #endif
 
 #include "VectorTypes.h"
+#include "Timer.h"
 #include "freeglut.h"
 #include "png.h"
 
