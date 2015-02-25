@@ -1,4 +1,4 @@
-﻿Build started 2015-02-23 11:49:38 PM.
+﻿Build started 2015-02-25 12:40:53 AM.
      1>Project "C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\KleptoEngine\KleptoEngine.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\SharedFiles" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\OpenAL/include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\LibPng/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeGlut/Include" /I"C:\Users\Benjamin\Documents\Visual Studio 2013\Projects\KleptoEngine\FreeType/Include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EngineSource.cpp
@@ -25,4 +25,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.88
+Time Elapsed 00:00:03.14

@@ -84,6 +84,47 @@ void Renderer::addTileToDraw(Pos2D position, Pos2D size, bool canPass, ULong id)
 	delete[] points;
 }
 
+void Renderer::setToFullScreen(void) 
+{ 
+	typeOfWindow = FullScreen; 
+	rebuildWindow();
+}
+
+void Renderer::setToWindowed(void) 
+{ 
+	typeOfWindow = Windowed; 
+	rebuildWindow();
+}
+
+void Renderer::setToMinimized(void) 
+{ 
+	typeOfWindow = Minimized; 
+	rebuildWindow();
+}
+
+void Renderer::rebuildWindow(void)
+{
+	switch(typeOfWindow)
+	{
+		case Minimized:
+			glutIconifyWindow();
+			break;
+		case FullScreen:
+			glutFullScreen();
+			dimensions = Pos2D(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+			break;
+		case Windowed:
+			glutLeaveFullScreen();
+			dimensions = Pos2D(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+			break;
+		default:;
+	}
+	gluOrtho2D(0, dimensions.x, 0, dimensions.y);
+	glViewport(0, 0, dimensions.x, dimensions.y);
+}
+
+WindowType Renderer::getWindowState(void) const { return typeOfWindow; }
+
 void Renderer::linkSprite(Sprite * sprite)
 {
 	ULong index = sprite -> getTextureValue();
@@ -119,6 +160,9 @@ void Renderer::render(void)
 #endif
 	}
 
+	gluOrtho2D(0, dimensions.x, 0, dimensions.y);
+	glViewport(0, 0, dimensions.x, dimensions.y);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -142,7 +186,7 @@ void Renderer::render(void)
 				glVertexPointer(2, GL_INT, 0, pixels.at(i));
 				glTexCoordPointer(2, GL_DOUBLE, 0, textureCoords.at(i));
 				glColorPointer(3, GL_DOUBLE, 0, basicBuffer.at(i));
-				glDrawArrays(GL_TRIANGLES, 0, currentPointer.at(i));
+				glDrawArrays(GL_TRIANGLES, 0, (GLsizei)currentPointer.at(i));
 				glClear(GL_DEPTH_BUFFER_BIT);
 			default:
 				break;
@@ -343,8 +387,8 @@ void Renderer::initWindow(int argc, char *argv[])
 	glEnable(GL_DEPTH);
 	glEnable(GL_DEPTH_TEST);
 	glLoadIdentity();
-	gluOrtho2D(0, 900, 0, 900);
-	glViewport(0, 0, 900, 900);
+	gluOrtho2D(0, dimensions.x, 0, dimensions.y);
+	glViewport(0, 0, dimensions.x, dimensions.y);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 }

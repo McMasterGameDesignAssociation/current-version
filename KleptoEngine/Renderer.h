@@ -84,6 +84,14 @@ class Renderer
 		//all of them have been processed
 		bool verifyLists(void);
 
+		//This function will be used to move the current
+		//position of the view port so that it is centered
+		//over the current player, and returns true if the
+		//view port needs to be updated, and false if it doesn't
+		bool updateViewPort(Pos2D newCenter);
+
+		WindowType typeOfWindow = Windowed;
+
 	protected:
 		friend World2D;
 
@@ -119,6 +127,19 @@ class Renderer
 		Renderer(void);
 		void initWindow(int argc, char *argv[]);
 		void render(void);
+
+		//rebuild window resizes the window so that the
+		//user can tell the renderer how to handle the
+		//current window. The window can be restored,
+		//minimized or restored
+		void rebuildWindow(void);
+		
+		void setToFullScreen(void);
+		void setToWindowed(void);
+		void setToMinimized(void);
+
+		WindowType getWindowState(void) const;
+
 		void populateArrays(World2D * world);
 };
 

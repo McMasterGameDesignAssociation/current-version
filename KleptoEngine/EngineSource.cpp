@@ -18,9 +18,12 @@
 #include "engineStdafx.h"
 #include "GameHeaders.h"
 
+void idle(void);
+
 Renderer testRender = Renderer();
 World2D testWorld;
 bool keys[4];
+
 void keyStateMachine(void)
 {
 	if(keys[0]) testWorld.changePlayerDirection(0);
@@ -33,6 +36,7 @@ void keyStateMachine(void)
 		testWorld.makePlayerDirty();
 	}
 }
+
 void keyboardDown(unsigned char key, int x, int y)
 {
 	switch(key)
@@ -53,8 +57,25 @@ void keyboardDown(unsigned char key, int x, int y)
 		case 'd':
 			keys[3] = true;
 			break;
+		case 'f':
+		case 'F':
+			testRender.setToFullScreen();
+			break;
+		case 'g':
+		case 'G':
+			testRender.setToWindowed();
+			break;
+		case 'm':
+		case 'M':
+			testRender.setToMinimized();
+			break;
 		default:;
 	}
+}
+
+void entryFunc(int a)
+{
+	testRender.setToWindowed();
 }
 
 void keyboardUp(unsigned char key, int x, int y)
@@ -80,8 +101,10 @@ void keyboardUp(unsigned char key, int x, int y)
 		default:;
 	}
 }
+
 void idle(void) 
 {
+	if(testRender.getWindowState() == Minimized) return;
 	testWorld.updateWorld();
 	keyStateMachine();
 }
@@ -90,14 +113,18 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluOrtho2D(0, 900, 0, 900);
-	glViewport(0, 0, 900, 900);
 	
 	testRender.render();
 
 	glutPostRedisplay();
 	glutSwapBuffers();
 	glFlush();
+}
+
+void reshape(int x, int y) 
+{ 
+	if(testRender.getWindowState() != FullScreen) 
+		testRender.rebuildWindow(); 
 }
 
 int main(int argc, char* argv[])
@@ -108,15 +135,16 @@ int main(int argc, char* argv[])
 	cout << "Debug mode" << endl << endl; 
 #endif
 	testWorld.setDimensions(Pos2D(30, 30));
-	testWorld.setTileSize(Pos2D(32, 32));
+	testWorld.setTileSize(Pos2D(64, 64));
 	
 #ifdef _DEBUG
 	cout << "generating tile lists" << endl;
 #endif
+
 	testWorld.addTileToSet("testTile0", "Just a test", 0, false);
 	testWorld.addTileToSet("testTile1", "Just a test", 12, true);
 	testWorld.addTileToSet("testTile2", "Just a test", 13, false);
-	testWorld.addTileToSet("testTile1", "Just a test", 27, true);
+	testWorld.addTileToSet("testTile3", "Just a test", 33, true);
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 9; j++)
 			testWorld.setTile(1, Pos2D(1 + i, 1 + j));
@@ -134,8 +162,8 @@ int main(int argc, char* argv[])
 	cout << "tile map loaded successfully" << endl << endl;
 #endif
 
-	testWorld.addSprite("Player 0", "The current Player", Pos2D(64, 64), 
-						FV2(96,96), 10, "Assets\\test_subject_2.png", 
+	testWorld.addSprite("Player 0", "The current Player", Pos2D(96, 96), 
+						FV2(190, 190), 10, "Assets\\test_subject_2.png", 
 						&testRender, Pos2D(8, 4), true, PlayerToken);
 	testWorld.addSprite("Actor 0", "The first actor", Pos2D(64, 64), 
 						 FV2(96, 70), 10, "Assets\\test_subject_3.png", 
@@ -173,6 +201,8 @@ int main(int argc, char* argv[])
 	glutIdleFunc(idle);
 	glutKeyboardFunc(keyboardDown);
 	glutKeyboardUpFunc(keyboardUp);
+	glutReshapeFunc(reshape);
+	glutEntryFunc(entryFunc);
 	glutMainLoop();
 
 	return 0;

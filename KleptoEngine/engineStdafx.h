@@ -88,6 +88,8 @@ struct atomicChoice
 static enum ItemType { Clothing, Electronics, Jewelry, SportsEquipment, Novelty };
 static enum SpriteType { PlayerToken, ActorToken };
 static enum ImageType { SpriteMap, TileMap, ObjectMap };
+static enum WindowType { Minimized, Windowed, FullScreen };
+
 using namespace std;
 
 #endif

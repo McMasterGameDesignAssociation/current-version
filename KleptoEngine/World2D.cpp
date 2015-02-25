@@ -201,7 +201,9 @@ ULong World2D::getTileAt(Pos2D pos)		const
 	else return tileLocations[pos.y][pos.x];
 }
 
-Pos2D World2D::getDefaultTileSize(void) const {return defaultTileSize;}
+Pos2D World2D::getDefaultTileSize(void) const { return defaultTileSize; }
+
+FV2 World2D::getPlayerPosition(void) const { return currentPlayer->getPosition(); }
 
 void World2D::addSprite(string name, string desc, Pos2D size, FV2 initPos,
 	Uint topSpeed, string imageName, Renderer * render,
@@ -211,7 +213,7 @@ void World2D::addSprite(string name, string desc, Pos2D size, FV2 initPos,
 	{
 		currentPlayer = new Player(0, name, desc, size, initPos, topSpeed, isAnimated);
 		render->loadImage(imageName, desc + " image", imageSeparations, currentPlayer->getTextureId(),  SpriteMap);
-		Pos2D imageSize = render->getImageSize(*currentPlayer->getTextureId());
+		Pos2D imageSize = render->getImageSize((Uint)*currentPlayer->getTextureId());
 		currentPlayer->setRelativeTileSize(imageSize, imageSeparations);
 #ifdef _DEBUG
 		cout << "Player image size is: " << imageSize.x << " " << imageSize.y << endl;
@@ -221,7 +223,7 @@ void World2D::addSprite(string name, string desc, Pos2D size, FV2 initPos,
 	{
 		Actor * temp = new Actor(actorSet.size(), name, desc, initPos, size, topSpeed, isAnimated);
 		render->loadImage(imageName, desc + " image", imageSeparations, temp->getTextureId(), SpriteMap);
-		Pos2D imageSize = render->getImageSize(*temp->getTextureId());
+		Pos2D imageSize = render->getImageSize((Uint)*temp->getTextureId());
 		temp->setRelativeTileSize(imageSize, imageSeparations);
 		actorSet.push_back(temp);
 #ifdef _DEBUG

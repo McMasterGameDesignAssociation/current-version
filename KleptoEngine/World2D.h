@@ -207,7 +207,14 @@ class World2D : public BasicEntity
 		void makePlayerClean(void);
 		bool isPlayerDirty(void) const;
 
+		//resetPlayerAnimationCycle resets
+		//the player's animation counter to 0
+		//and then moves the animation frame
 		void resetPlayerAnimationCycle(void);
+
+		//getPlayerPosition returns the 
+		//currentPlayer's current position
+		FV2 getPlayerPosition(void) const;
 };
 
 #endif
